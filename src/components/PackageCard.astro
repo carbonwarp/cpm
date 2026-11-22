@@ -1,0 +1,23 @@
+---
+import Avatar from './Avatar.astro';
+import { packageUrl } from '../config';
+import type { Pkg } from '../lib/packages';
+
+interface Props {
+  pkg: Pkg;
+}
+const { pkg } = Astro.props;
+---
+
+<li data-search={`${pkg.name} ${pkg.description}`.toLowerCase()}>
+  <a
+    href={packageUrl(pkg.name)}
+    class="flex h-full items-center gap-4 rounded-2xl border border-line bg-card p-5 hover:border-brand"
+  >
+    <Avatar name={pkg.name} class="size-16 text-3xl" />
+    <div class="min-w-0">
+      <div class="truncate font-semibold">{pkg.name}</div>
+      <div class="line-clamp-2 text-sm text-muted">{pkg.description}</div>
+    </div>
+  </a>
+</li>

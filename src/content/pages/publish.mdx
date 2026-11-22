@@ -1,0 +1,76 @@
+---
+title: Publishing to CPM
+---
+
+CPM uses a single download URL per package and selects the appropriate file extension based on the target operating system. Version mismatches between the local package and remote packages are detected via the `checksums.txt` file.
+
+For example, a release published at:
+
+`https://github.com/carbonwarp/12/cw-software-latest/cw-software`
+
+can provide multiple package formats:
+
+- RPM-based distributions: `.rpm`
+- Debian-based distributions: `.deb`
+- Arch Linux: `.pkg.tar.zst`
+
+CPM automatically selects the correct format for the host OS.
+
+## Architecture Support
+
+Each package can optionally specify its target architecture as a numeric value before the target hosts. If omitted, CPM defaults to `0` (architecture-independent).
+
+| Value | Architecture                         |
+| ----- | ------------------------------------ |
+| `0`   | No architecture restriction (noarch) |
+| `1`   | x86                                  |
+| `2`   | ARM64                                |
+| `3`   | Both x86 and ARM64                   |
+
+The architecture identifier is incorporated into the package filename. For example, an RPM package with architecture `1` uses the `x86_64` designation.
+
+## Submitting to the CPM Index
+
+As a current limitation, CPM supports only its official repository — third-party repos cannot be added. You must submit your package to the CPM Index.
+
+Submissions are expected to provide x86 and ARM64 builds in all three formats: rpm, deb, and pkg.tar.zst. Exceptions could be taken if justified.
+
+### Compactful format
+
+The CPM repo uses the `.compactful` extension and its file looks as follows,
+
+```compactful
+CPM Core
+"Packages published on CPM"
+
+blue-surf : "Blue Corp. - Surf internet as you would do with a surf-board"
+  3 rpm deb arch
+  https://blue.eg/pkg/releases/
+
+supergit : "Hayam A. - Git. Redefined. Enhanced"
+  0 rpm deb arch
+  https://github.com/hayamahamed/supergit/releases
+```
+
+As the name *Compactful* suggests, the publisher name is embedded in the description, terminated by the first `.`.
+
+
+### Required assets
+
+Since `blue-surf` declares architecture `3` (x86 + ARM64) for `rpm`, `deb`, and `arch`, it must serve all of the following at the given URL:
+
+```
+https://blue.eg/pkg/releases/
+├── blue-surf-x86_64.rpm
+├── blue-surf-aarch64.rpm
+├── blue-surf-x86_64.deb
+├── blue-surf-aarch64.deb
+├── blue-surf-x86_64.pkg.tar.zst
+├── blue-surf-aarch64.pkg.tar.zst
+└── checksums.txt
+```   
+
+### CPM Stream
+
+CPM is also implementing *cpm-stream*, a richer index that will hold the publisher name, detailed description, screenshots, and more specifically for Software stores.
+

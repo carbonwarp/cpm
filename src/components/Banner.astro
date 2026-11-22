@@ -1,0 +1,19 @@
+---
+// Rounded content card. Becomes a link when `href` is given.
+interface Props {
+  tone?: 'plain' | 'brand';
+  href?: string;
+  class?: string;
+}
+const { tone = 'plain', href, class: cls } = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const tones = {
+  plain: 'border border-line bg-card',
+  brand: 'bg-brand text-white',
+};
+---
+
+<Tag href={href} class:list={['block rounded-2xl p-6', tones[tone], cls]}>
+  <slot />
+</Tag>

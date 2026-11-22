@@ -1,0 +1,102 @@
+
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+html {
+  scrollbar-width: none;
+}
+/* Concat-inspired monochromatic dark theme */
+:root {
+  color-scheme: dark;
+
+  --page: #111111;
+  --card: #242424;
+  --line: #303030;
+
+  --ink: #f0f0f0;
+  --muted: #a1a1a1;
+
+  --brand: #8f2638;
+  --brand-text: #d66b7d;
+  --brand-soft: #351c23;
+  --accent: #a52a43;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-text: var(--brand-text);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+}
+
+::view-transition-old(root) {
+  animation: fade-out 180ms ease;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 250ms ease;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+dialog {
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  filter: blur(4px);
+
+  transition:
+    opacity 280ms ease,
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 280ms ease,
+    overlay 350ms allow-discrete,
+    display 350ms allow-discrete;
+}
+
+dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    filter: blur(4px);
+  }
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0%);
+  backdrop-filter: blur(0);
+  transition:
+    background 300ms ease,
+    backdrop-filter 300ms ease,
+    overlay 350ms allow-discrete,
+    display 350ms allow-discrete;
+}
+
+dialog[open]::backdrop {
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(3px);
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    background: rgb(0 0 0 / 0%);
+    backdrop-filter: blur(0);
+  }
+}

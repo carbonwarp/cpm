@@ -1,0 +1,60 @@
+---
+// A shell command with a copy button.
+import Button from './Button.astro';
+
+interface Props {
+  command: string;
+}
+const { command } = Astro.props;
+---
+
+<div class="flex items-center gap-2 rounded-xl border border-line bg-page p-3">
+  <code class="flex-1 overflow-x-auto font-mono text-sm">{command}</code>
+  <Button variant="secondary" size="sm" data-copy={command}>Copy</Button>
+  
+
+<script>
+  document.addEventListener('click', async (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest('[data-copy]') as HTMLElement | null;
+
+    if (!button) return;
+
+    const command = button.getAttribute('data-copy');
+    if (!command) return;
+
+    try {
+      await navigator.clipboard.writeText(command);
+
+      button.dataset.copied = 'true';
+      button.textContent = '✓ Copied';
+
+      window.setTimeout(() => {
+        button.dataset.copied = 'false';
+        button.textContent = 'Copy';
+      }, 1400);
+    } catch (error) {
+      console.error('Clipboard copy failed:', error);
+    }
+  });
+</script>
+
+<style>
+  [data-copy] {
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  [data-copy][data-copied="true"] {
+    background: #351c23;
+    color: #d66b7d;
+    border-color: #8f2638;
+    transform: scale(0.96);
+  }
+</style>
+
+
+</div>

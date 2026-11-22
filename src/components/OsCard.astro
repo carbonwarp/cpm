@@ -1,0 +1,20 @@
+---
+import Avatar from './Avatar.astro';
+import { iconUrl } from '../config';
+import type { Os } from '../lib/setup';
+
+interface Props {
+  os: Os;
+}
+const { os } = Astro.props;
+---
+
+<li data-search={os.name.toLowerCase()}>
+  <a
+    href={os.url}
+    class="flex h-full items-center gap-4 rounded-2xl border border-line bg-card p-5 hover:border-brand"
+  >
+    <Avatar name={os.name} src={iconUrl(os.icon)} class="size-14 text-2xl" />
+    <span class="font-semibold">{os.name}</span>
+  </a>
+</li>

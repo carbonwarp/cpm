@@ -1,0 +1,33 @@
+---
+title: About
+---
+
+# About CPM
+
+![CPM](/favicon.svg)
+
+CPM, Compactful (Carbonwarp) Package Manager, is a distribution-agnostic software manager for Linux. 
+
+It operates as a layer above the native system package manager (apt, dnf, pacman, etc) rather than as a replacement. CPM retrieves the appropriate binary from the URL specified in the CPM repo, an easy to work with text format, and gives its installation to the system package manager. It lets system process it as a commad-line tool, leaving the said software under the CPM.
+
+## Rationale
+
+At first glance, CPM appears to introduce an additional layer of complexity. In practice, however, it enables developers, projects, and organisations to distribute native Linux packages directly to end users without intermediation. This has two significant advantages:
+
+- CPM's repository structure is version-agnostic: a single endpoint always resolves to the latest available binary. Users therefore receive the most current version without the distribution having to refresh its package index.
+- Publishers are relieved of the operational overhead of maintaining a traditional repository — infrastructure, update cycles, and associated resource expenditure — while still delivering packages in the format the system package manager natively understands.
+
+
+## Comparison
+
+| Dimension | **CPM** | Snap | Flatpak | APT / DNF / Pacman |
+|---|---|---|---|---|
+| **Package format** | Native (`.deb`, `.rpm`, `.pkg.tar.zst`) | SquashFS (proprietary) | OSTree | Native per distro |
+| **Scope** | Cross-distro | Cross-distro | Cross-distro | Single distro only |
+| **Version freshness** | Always latest | Channel-based (publisher-controlled) | Branch-based (publisher-controlled) | Bounded by distro release cycle |
+| **Security model** | Inherited from native PM and CPM's own set | Daemon runs as root; AppArmor confinement | Bubblewrap sandbox — apps isolated from host | GPG-signed, no sandboxing |
+| **Publisher overhead** | Minimal — no repo infra, no index refresh | Store submission + daemon dependency | Flathub submission + runtime bundling | Full repo, signing, index, per-distro packaging |
+| **Rollback** | Via native PM | `snap revert` | `flatpak undo` | Limited / manual |
+
+> CPM sidesteps all three: packages are **native** (no sandbox, no daemon), **always current** (no release-cycle ceiling), and **delivered without per-distro repository maintenance**.   
+

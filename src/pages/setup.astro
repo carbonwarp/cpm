@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import CardGrid from '../components/CardGrid.astro';
+import OsCard from '../components/OsCard.astro';
+import SearchBox from '../components/SearchBox.astro';
+import { site } from '../config';
+import { getSetupPages } from '../lib/setup';
+
+const systems = await getSetupPages();
+---
+
+<Base title="Set up">
+  <div class="mx-auto max-w-2xl text-center">
+    <h1 class="text-3xl font-bold">Set Up {site.name}</h1>
+    <p class="mt-3 text-muted">
+      Follow the steps for your Linux distribution to install {site.name} and start installing
+      packages.
+    </p>
+    <SearchBox filter="#systems" placeholder="Find your distribution…" class="mt-8" />
+  </div>
+
+  <CardGrid id="systems" cols={4} empty="No distribution found." class="mt-8">
+    {systems.map((os) => <OsCard os={os} />)}
+  </CardGrid>
+</Base>

@@ -1,0 +1,18 @@
+---
+// Responsive grid of <li> cards. Items with a data-search attribute can be filtered
+// by a SearchBox pointing at this grid's id.
+interface Props {
+  id: string;
+  cols?: 3 | 4;
+  empty?: string;
+  class?: string;
+}
+const { id, cols = 3, empty = 'Nothing found.', class: cls } = Astro.props;
+
+const colClass = { 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }[cols];
+---
+
+<ul id={id} class:list={['grid gap-4 sm:grid-cols-2', colClass, cls]}>
+  <slot />
+  <li data-empty hidden class="col-span-full text-muted">{empty}</li>
+</ul>
