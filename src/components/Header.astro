@@ -1,0 +1,24 @@
+---
+import SearchBox from './SearchBox.astro';
+import { site } from '../config';
+---
+
+<header class="border-b border-line bg-card/50">
+  <div class="mx-auto flex items-center gap-4 px-4 py-3">
+    <div class="flex flex-1 items-center">
+      <a href="/" class="flex items-center gap-2 font-semibold">
+        <img src="/favicon.svg" width=80 />
+      </a>
+    </div>
+    <SearchBox
+      name="q"
+      action="/"
+      filter="#packages"
+      placeholder="Search packages"
+      class="w-full max-w-sm"
+    />
+    <nav class="flex flex-1 items-center justify-end gap-5 text-sm font-medium">
+      {site.nav.map((link) => <a href={link.href} class="hover:text-brand-text">{link.label}</a>)}
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,23 @@
+---
+// The one place where rendered markdown/MDX is styled, so .mdx files need no classes.
+// - blank line  -> new paragraph with a visible gap (prose-p:my-5)
+// - single newline -> line break (remark-breaks, see astro.config.mjs)
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<div
+  class:list={[
+    'prose prose-stone dark:prose-invert max-w-none',
+    'prose-p:my-5 prose-li:my-1 prose-headings:scroll-mt-20 prose-headings:font-semibold',
+    'prose-a:text-brand-text prose-a:font-medium',
+    'prose-code:rounded prose-code:bg-card prose-code:px-1.5 prose-code:py-0.5 prose-code:font-medium prose-code:before:content-none prose-code:after:content-none',
+    'prose-pre:rounded-xl prose-pre:border prose-pre:border-line',
+    'prose-img:rounded-xl prose-hr:border-line',
+    cls,
+  ]}
+>
+  <slot />
+</div>

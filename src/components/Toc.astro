@@ -1,0 +1,26 @@
+---
+// "On this page" list built from the headings of the rendered MDX.
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const headings = Astro.props.headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  headings.length > 0 && (
+    <nav class="hidden text-sm lg:sticky lg:top-8 lg:block lg:self-start">
+      <h2 class="font-semibold">On this page</h2>
+      <ul class="mt-2 space-y-1.5">
+        {headings.map((h) => (
+          <li class:list={[h.depth === 3 && 'pl-3']}>
+            <a href={`#${h.slug}`} class="text-muted hover:text-ink">
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

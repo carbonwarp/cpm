@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Avatar from '../components/Avatar.astro';
+import Banner from '../components/Banner.astro';
+import Button from '../components/Button.astro';
+import CardGrid from '../components/CardGrid.astro';
+import PackageCard from '../components/PackageCard.astro';
+import Section from '../components/Section.astro';
+import { packageUrl, site } from '../config';
+import { getPackages } from '../lib/packages';
+
+const packages = await getPackages();
+const featured = packages[0];
+---
+
+<Base>
+  <div class="grid gap-4 md:grid-cols-2">
+    {
+      featured && (
+        <Banner
+          tone="brand"
+          href={packageUrl(featured.name)}
+          class="flex items-center justify-between gap-4"
+        >
+          <div class="min-w-0">
+            <p class="text-sm opacity-90">★ Featured</p>
+            <h2 class="mt-6 truncate text-2xl font-bold">{featured.name}</h2>
+            <p class="line-clamp-2 text-sm opacity-90">{featured.description}</p>
+          </div>
+          <Avatar name={featured.name} class="size-24 text-5xl" />
+        </Banner>
+      )
+    }
+    <Banner>
+      <h2 class="text-2xl font-bold">{site.name}</h2>
+      <p class="mt-2 text-muted">{site.tagline}</p>
+      <Button href="/setup" class="mt-5">Get {site.name} now !</Button>
+    </Banner>
+  </div>
+
+  <Section title="Packages" class="mt-10">
+    <CardGrid id="packages" empty="No packages found.">
+      {packages.map((pkg) => <PackageCard pkg={pkg} />)}
+    </CardGrid>
+  </Section>
+</Base>

@@ -1,0 +1,37 @@
+---
+// Docs page shell: sidebar, article (styled by Prose), "on this page" list.
+// The <slot /> receives rendered MDX, so the MDX itself needs no styling.
+import type { MarkdownHeading } from 'astro';
+import Base from './Base.astro';
+import Prose from '../components/Prose.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Toc from '../components/Toc.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  sidebarTitle: string;
+  items: { label: string; href: string }[];
+  allHref?: string;
+  allLabel?: string;
+  headings?: MarkdownHeading[];
+}
+const { title, description, sidebarTitle, items, allHref, allLabel, headings = [] } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <div class="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)_12rem] lg:gap-12">
+    <Sidebar
+      title={sidebarTitle}
+      items={items}
+      current={Astro.url.pathname}
+      allHref={allHref}
+      allLabel={allLabel}
+    />
+    <article class="min-w-0">
+      <h1 class="text-3xl font-bold tracking-tight">{title}</h1>
+      <Prose class="mt-6"><slot /></Prose>
+    </article>
+    <Toc headings={headings} />
+  </div>
+</Base>

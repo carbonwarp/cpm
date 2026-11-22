@@ -1,0 +1,42 @@
+---
+// With `action`, it is a GET form (so it works from any page). Without, a plain input.
+// `filter` is a selector for a list whose [data-search] items it filters live.
+interface Props {
+  placeholder: string;
+  filter?: string;
+  name?: string;
+  action?: string;
+  class?: string;
+}
+const { placeholder, filter, name, action, class: cls } = Astro.props;
+
+const Tag = action ? 'form' : 'div';
+---
+
+<Tag action={action} method={action ? 'get' : undefined} class:list={['relative', cls]}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+  >
+    <circle cx="11" cy="11" r="7"></circle>
+    <path d="m20 20-3.5-3.5"></path>
+  </svg>
+  <input
+    type="search"
+    name={name}
+    data-filter={filter}
+    placeholder={placeholder}
+    class="w-full rounded-full border border-line bg-page py-2 pl-9 pr-9 text-sm outline-none focus:border-brand"
+  />
+  {
+    name === 'q' && (
+      <kbd class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-line px-1.5 text-xs text-muted">
+        /
+      </kbd>
+    )
+  }
+</Tag>

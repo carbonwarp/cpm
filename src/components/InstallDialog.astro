@@ -1,0 +1,19 @@
+---
+// Open it with <Button data-open="install">.
+import Dialog from './Dialog.astro';
+import CommandBox from './CommandBox.astro';
+import { installCommand } from '../config';
+
+interface Props {
+  pkg: string;
+}
+const { pkg } = Astro.props;
+---
+
+<Dialog id="install" title={`Install ${pkg}`}>
+  <p class="mt-1 text-sm text-muted">Run this in a terminal:</p>
+  <div class="mt-4"><CommandBox command={installCommand(pkg)} /></div>
+  <p class="mt-4 text-sm text-muted">
+    Don't have Compactful yet? <a href="/setup" class="text-brand-text underline">Set it up</a>.
+  </p>
+</Dialog>

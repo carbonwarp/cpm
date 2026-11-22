@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import Docs from '../../layouts/Docs.astro';
+import { getSetupPages } from '../../lib/setup';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('setup');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const systems = await getSetupPages();
+---
+
+<Docs
+  title={`Set up on ${entry.data.title}`}
+  sidebarTitle="Distributions"
+  items={systems.map((os) => ({ label: os.name, href: os.url }))}
+  allHref="/setup"
+  allLabel="All distributions"
+  headings={headings}
+>
+  <Content />
+</Docs>

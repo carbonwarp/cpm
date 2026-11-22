@@ -1,0 +1,33 @@
+---
+// Link list for a docs section. Pass any items; the current page is highlighted.
+interface Props {
+  title: string;
+  items: { label: string; href: string }[];
+  current: string;
+  allHref?: string;
+  allLabel?: string;
+}
+const { title, items, current, allHref, allLabel } = Astro.props;
+
+const clean = (p: string) => p.replace(/\/$/, '');
+---
+
+<nav class="text-sm lg:sticky lg:top-8 lg:self-start">
+  {allHref && <a href={allHref} class="text-muted hover:text-ink">← {allLabel}</a>}
+  <h2 class:list={['font-semibold', allHref && 'mt-4']}>{title}</h2>
+  <ul class="mt-2 hidden space-y-0.5 lg:block">
+    {
+      items.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-current={clean(item.href) === clean(current) ? 'page' : undefined}
+            class="block rounded-lg px-3 py-1.5 text-muted hover:text-ink aria-[current=page]:bg-brand-soft aria-[current=page]:font-medium aria-[current=page]:text-brand-text"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

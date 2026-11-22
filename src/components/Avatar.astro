@@ -1,0 +1,29 @@
+---
+// Letter badge. If `src` loads, the image covers the letter; if it fails, the letter stays.
+interface Props {
+  name: string;
+  src?: string;
+  class?: string;
+}
+const { name, src, class: cls } = Astro.props;
+---
+
+<span
+  class:list={[
+    'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-[22%] bg-brand-soft font-bold uppercase text-brand-text',
+    cls,
+  ]}
+>
+  {name[0]}
+  {
+    src && (
+      <img
+        src={src}
+        alt=""
+        loading="lazy"
+        onerror="this.remove()"
+        class="absolute inset-0 size-full bg-card object-contain p-[18%]"
+      />
+    )
+  }
+</span>
