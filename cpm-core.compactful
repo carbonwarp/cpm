@@ -1,6 +1,6 @@
 CPM Core
 "Packages published on CPM"
 
-supergit : "Hayam A. - Git. Redefined. Enhanced"
+placeholder-package : "Placeholder"
   0 rpm deb arch
-  https://github.com/hayamahamed/supergit/releases/supergit-latest/
+  https://place.holder
