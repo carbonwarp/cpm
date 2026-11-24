@@ -34,8 +34,9 @@ jobs:
         run: pnpm build
 
       - name: Deploy to Cloudflare
-        uses: cloudflare/wrangler-action@v4
+        uses: cloudflare/pages-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=cpm
+          projectName: cpm
+          directory: './dist'
