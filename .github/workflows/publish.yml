@@ -34,7 +34,7 @@ jobs:
         run: pnpm build
 
       - name: Deploy to Cloudflare
-        uses: cloudflare/pages-action@v4
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
