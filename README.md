@@ -1,9 +1,9 @@
 # Compactful Package Manager
 
+_This branch holds the webpages of cpm store and its core repo_
 ```sh
-npm install
-cp .env.example .env   # set CPM_SOURCE to your .compactful URL
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## Structure
