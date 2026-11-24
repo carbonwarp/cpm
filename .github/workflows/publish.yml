@@ -33,10 +33,10 @@ jobs:
       - name: Build
         run: pnpm build
 
-
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=cpm
+            apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+            accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+            command: pages deploy ./dist/ --project-name=cw-cpm
+            gitHubToken: ${{ secrets.GITHUB_TOKEN }}
